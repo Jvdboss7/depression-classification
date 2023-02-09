@@ -8,3 +8,10 @@ seaborn
 neattext
 wordcloud
 jupyter
+boto3
+mypy-boto3-s3
+Jinja2
+fastapi
+uvicorn
+python-multipart
+-e .
