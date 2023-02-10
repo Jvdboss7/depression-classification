@@ -1,6 +1,7 @@
 import os
 import sys
 import pandas as pd
+import numpy as np
 from src.logger import logging
 from src.exception import CustomException
 from src.constants import *
@@ -21,6 +22,7 @@ class DataTransformation:
     def load_split_data(self):
         try:
             logging.info("Entered into the load_split_data function")
+            print(f"-------------{self.data_ingestion_artifact.all_dataset_file_path}--------------")
             df = pd.read_csv(self.data_ingestion_artifact.all_dataset_file_path)
             train_dataset,test_dataset = train_test_split(df,test_size = 0.2, random_state=42)
             logging.info("Exited the load_split_data function")
@@ -72,14 +74,18 @@ class DataTransformation:
             # save_object(self.data_transformation_config.TRAIN_TRANSFORM_OBJECT_FILE_PATH, train_data)
             # save_object(self.data_transformation_config.TEST_TRANSFORM_OBJECT_FILE_PATH, test_data)
             os.makedirs(self.data_transformation_config.DATA_TRANSFORMATION_ARTIFACTS_DIR,exist_ok=True)
-            
+            np.save(self.data_transformation_config.TRAIN_TEXT_PAD,train_text_pad)
+            np.save(self.data_transformation_config.TEST_TEXT_PAD,test_text_pad)
+            np.save(self.data_transformation_config.TRAIN_OUTPUT,train_output)
+            np.save(self.data_transformation_config.TEST_OUTPUT,test_output)
+
             # train_text_pad, train_output,test_text_pad,test_output
 
             data_transformation_artifact = DataTransformationArtifacts(
-                transformed_train_object=self.data_transformation_config.TRAIN_TRANSFORM_OBJECT_FILE_PATH,
-                transformed_test_object=self.data_transformation_config.TEST_TRANSFORM_OBJECT_FILE_PATH,
-                train_data_path = self.data_ingestion_artifact.train_file_path,
-                test_data_path = self.data_ingestion_artifact.test_file_path
+                train_text_pad_path=self.data_transformation_config.TRAIN_TEXT_PAD,
+                test_text_pad_path=self.data_transformation_config.TEST_TEXT_PAD,
+                train_output_path = self.data_transformation_config.TRAIN_OUTPUT,
+                test_output_path = self.data_transformation_config.TEST_OUTPUT
                 )
 
             logging.info(f'{data_transformation_artifact}')
