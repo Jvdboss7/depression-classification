@@ -12,3 +12,8 @@ class DataTransformationArtifacts:
     test_text_pad_path: str
     train_output_path: str
     test_output_path: str
+
+# Model Trainer artifacts
+@dataclass
+class ModelTrainerArtifacts:
+    trained_model_path: str

@@ -27,3 +27,12 @@ class DataTransformationConfig:
                                                                 TRAIN_OUTPUT)
         self.TEST_OUTPUT = os.path.join(self.DATA_TRANSFORMATION_ARTIFACTS_DIR,
                                                                 TEST_OUTPUT)
+
+@dataclass
+class ModelTrainerConfig:
+     def __init__(self):
+        self.MODEL_TRAINER_ARTIFACTS_DIR: str = os.path.join(os.getcwd(), ARTIFACTS_DIR, MODEL_TRAINER_ARTIFACTS_DIR)
+        self.TRAINED_MODEL_PATH = os.path.join(self.MODEL_TRAINER_ARTIFACTS_DIR,TRAINED_MODEL_DIR)
+        self.EMBEDDINGS = EMBEDDINGS
+        self.EMBEDDINGS_PATH: str = os.path.join(os.getcwd(),MODEL_TRAINER_ARTIFACTS_DIR,EMBEDDINGS)
+
