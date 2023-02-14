@@ -26,6 +26,12 @@ MODEL_TRAINER_ARTIFACTS_DIR = 'ModelTrainerArtifacts'
 EMBEDDINGS = "embedding"
 TRAINED_MODEL_DIR = "trained_model"
 
+# Model  Evaluation constants
+MODEL_EVALUATION_ARTIFACTS_DIR = 'ModelEvaluationArtifacts'
+BEST_MODEL_DIR = "best_Model"
+# MODEL_EVALUATION_FILE_NAME = 'loss.csv'
+BUCKET_FOLDER_NAME="ModelTrainerArtifacts/trained_model/"
+
 # AWS CONSTANTS
 AWS_ACCESS_KEY_ID_ENV_KEY = "AWS_ACCESS_KEY_ID"
 AWS_SECRET_ACCESS_KEY_ENV_KEY = "AWS_SECRET_ACCESS_KEY"

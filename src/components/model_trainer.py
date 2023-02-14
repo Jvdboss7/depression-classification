@@ -106,7 +106,7 @@ class ModelTrainer:
             test_output = np.load(self.data_transformation_artifacts.test_output_path)
 
             history=model.fit(train_text_pad,train_output,validation_data=(test_text_pad,test_output),
-            epochs=20,batch_size=256,callbacks=[early_stop,reducelr])
+            epochs=30,batch_size=256,callbacks=[early_stop,reducelr])
 
             model.save(self.model_trainer_config.TRAINED_MODEL_PATH)
 
