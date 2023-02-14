@@ -16,6 +16,9 @@ class DataIngestion:
         self.s3 = S3Sync()
 
     def get_data_from_s3(self) -> None:
+        """
+        It downloads the data from S3 bucket to the local machine
+        """
         try:
             logging.info("Entered the get_data_from_s3 method of Data ingestion class")
             os.makedirs(self.data_ingestion_config.DATA_INGESTION_ARTIFACTS_DIR, exist_ok=True)
@@ -26,7 +29,11 @@ class DataIngestion:
         except Exception as e:
             raise CustomException(e, sys) from e
 
-    def unzip_and_clean(self):
+    def unzip_and_clean(self) -> str:
+        """
+        It unzips the zip file and returns the path of the unzipped file
+        :return: The unzipped file path is being returned.
+        """
         logging.info("Entered the unzip_and_clean method of Data ingestion class")
         try:
             unpack_archive(filename=self.data_ingestion_config.ZIP_FILE_PATH,extract_dir=self.data_ingestion_config.ZIP_FILE_DIR,format="zip")
@@ -38,7 +45,11 @@ class DataIngestion:
             raise CustomException(e, sys) from e
 
 
+# The main method of the class. It is calling the other methods in the class.
     def initiate_data_ingestion(self) -> DataIngestionArtifacts:
+        """
+        > This function initiates the data ingestion process
+        """
         logging.info("Entered the initiate_data_ingestion method of Data ingestion class")
         try:
 

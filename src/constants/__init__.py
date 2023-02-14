@@ -16,10 +16,15 @@ DATASET_DIR = "Suicide_Detection.csv"
 DATA_TRANSFORMATION_ARTIFACTS_DIR = 'DataTransformationArtifacts'
 DATA_TRANSFORMATION_TRAIN_DIR = 'train_data'
 DATA_TRANSFORMATION_TEST_DIR = 'test_data'
-TRAIN_TEXT_PAD = "train_text_pad"
-TEST_TEXT_PAD = "test_text_pad"
-TRAIN_OUTPUT = 'train_output'
-TEST_OUTPUT = 'test_output'
+TRAIN_TEXT_PAD = "train_text_pad.npy"
+TEST_TEXT_PAD = "test_text_pad.npy"
+TRAIN_OUTPUT = 'train_output.npy'
+TEST_OUTPUT = 'test_output.npy'
+
+# Model Training Constants
+MODEL_TRAINER_ARTIFACTS_DIR = 'ModelTrainerArtifacts'
+EMBEDDINGS = "embedding"
+TRAINED_MODEL_DIR = "trained_model"
 
 # AWS CONSTANTS
 AWS_ACCESS_KEY_ID_ENV_KEY = "AWS_ACCESS_KEY_ID"

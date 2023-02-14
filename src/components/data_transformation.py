@@ -16,10 +16,24 @@ from src.entity.artifact_entity import DataIngestionArtifacts, DataTransformatio
 
 class DataTransformation:
     def __init__(self, data_transformation_config: DataTransformationConfig, data_ingestion_artifact: DataIngestionArtifacts):
+        """
+        > This function takes in a data transformation configuration and a data ingestion artifact and
+        returns a data transformation artifact
+        
+        :param data_transformation_config: This is the configuration object that contains the parameters for
+        the data transformation job
+        :type data_transformation_config: DataTransformationConfig
+        :param data_ingestion_artifact: This is the object that contains the data that we want to transform
+        :type data_ingestion_artifact: DataIngestionArtifacts
+        """
         self.data_transformation_config = data_transformation_config
         self.data_ingestion_artifact = data_ingestion_artifact
 
     def load_split_data(self):
+        """
+        This function loads the data from the file path and splits the data into train and test data
+        :return: train_dataset,test_dataset
+        """
         try:
             logging.info("Entered into the load_split_data function")
             print(f"-------------{self.data_ingestion_artifact.all_dataset_file_path}--------------")
@@ -31,6 +45,13 @@ class DataTransformation:
             raise CustomException(e,sys) from e
 
     def text_cleaning(self,text):
+        """
+        This function takes in a list of sentences and returns a list of cleaned sentences and a list of the
+        length of each sentence
+        
+        :param text: The text to be cleaned
+        :return: clean_text and text_len
+        """
         try:
             logging.info("Entered into the text_cleaning function")
             text_len = []
@@ -48,6 +69,11 @@ class DataTransformation:
 
 
     def initiate_data_transformation(self) -> DataTransformationArtifacts:
+        """
+        The function loads the data, cleans the text, tokenizes the text, pads the text, encodes the output
+        and saves the artifacts
+        :return: DataTransformationArtifacts object
+        """
 
         try:
             logging.info("Entered the initiate_data_transformation method of Data transformation class")
