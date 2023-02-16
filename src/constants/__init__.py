@@ -2,6 +2,8 @@ import os
 from datetime import datetime
 
 TIMESTAMP: str = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
+APP_HOST = "0.0.0.0"
+APP_PORT = 8080
 
 # Data Ingestion constants
 ARTIFACTS_DIR = os.path.join("artifacts", TIMESTAMP)
@@ -25,6 +27,12 @@ TEST_OUTPUT = 'test_output.npy'
 MODEL_TRAINER_ARTIFACTS_DIR = 'ModelTrainerArtifacts'
 EMBEDDINGS = "embedding"
 TRAINED_MODEL_DIR = "trained_model"
+
+# Model  Evaluation constants
+MODEL_EVALUATION_ARTIFACTS_DIR = 'ModelEvaluationArtifacts'
+BEST_MODEL_DIR = "best_Model"
+# MODEL_EVALUATION_FILE_NAME = 'loss.csv'
+BUCKET_FOLDER_NAME="ModelTrainerArtifacts/trained_model/"
 
 # AWS CONSTANTS
 AWS_ACCESS_KEY_ID_ENV_KEY = "AWS_ACCESS_KEY_ID"

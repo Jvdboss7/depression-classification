@@ -36,3 +36,25 @@ class ModelTrainerConfig:
         self.EMBEDDINGS = EMBEDDINGS
         self.EMBEDDINGS_PATH: str = os.path.join(os.getcwd(),MODEL_TRAINER_ARTIFACTS_DIR,EMBEDDINGS)
 
+@dataclass
+class ModelEvaluationConfig: 
+    def __init__(self):
+        self.MODEL_EVALUATION_ARTIFACT_DIR: str = os.path.join(os.getcwd(),ARTIFACTS_DIR, MODEL_EVALUATION_ARTIFACTS_DIR)
+        self.BUCKET_NAME = BUCKET_NAME 
+        self.TRAINED_MODEL_DIR: str = os.path.join(os.getcwd(), ARTIFACTS_DIR, MODEL_TRAINER_ARTIFACTS_DIR,TRAINED_MODEL_DIR)
+        self.MODEL_TRAINER_ARTIFACTS_DIR: str = os.path.join(os.getcwd(), ARTIFACTS_DIR, MODEL_TRAINER_ARTIFACTS_DIR)
+        self.TRAINED_MODEL_PATH = os.path.join(self.MODEL_TRAINER_ARTIFACTS_DIR,TRAINED_MODEL_DIR)
+        self.S3_MODEL_FOLDER = TRAINED_MODEL_DIR
+        self.BUCKET_FOLDER_NAME = BUCKET_FOLDER_NAME
+        self.S3_BUCKET_NAME = BUCKET_NAME
+        # self.MODEL_DIR = MODEL_DIR
+
+@dataclass
+class ModelPusherConfig:
+    def __init__(self):
+        self.TRAINED_MODEL_DIR: str = os.path.join(os.getcwd(),ARTIFACTS_DIR,MODEL_TRAINER_ARTIFACTS_DIR,TRAINED_MODEL_DIR)
+        self.BEST_MODEL_PATH: str = os.path.join(self.TRAINED_MODEL_DIR)
+        self.BUCKET_NAME: str = BUCKET_NAME
+        self.S3_MODEL_KEY_PATH: str = os.path.join(MODEL_TRAINER_ARTIFACTS_DIR,TRAINED_MODEL_DIR)
+
+        

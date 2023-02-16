@@ -2,6 +2,7 @@ import os
 import sys
 import pandas as pd
 import numpy as np
+import pickle
 from src.logger import logging
 from src.exception import CustomException
 from src.constants import *
@@ -80,8 +81,8 @@ class DataTransformation:
 
             train_dataset,test_dataset= self.load_split_data()
 
-            clean_train_text, train_text_len = self.text_cleaning(train_dataset.text)
-            clean_test_text, test_text_len = self.text_cleaning(test_dataset.text)
+            clean_train_text,  _ = self.text_cleaning(train_dataset.text)
+            clean_test_text, _ = self.text_cleaning(test_dataset.text)
 
             tokenizer = Tokenizer()
             tokenizer.fit_on_texts(clean_train_text)
@@ -97,6 +98,8 @@ class DataTransformation:
             train_output=label_target.fit_transform(train_dataset['class'])
             test_output=label_target.transform(test_dataset['class'])
 
+            with open('tokenizer.pickle', 'wb') as handle:
+                pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
             # save_object(self.data_transformation_config.TRAIN_TRANSFORM_OBJECT_FILE_PATH, train_data)
             # save_object(self.data_transformation_config.TEST_TRANSFORM_OBJECT_FILE_PATH, test_data)
             os.makedirs(self.data_transformation_config.DATA_TRANSFORMATION_ARTIFACTS_DIR,exist_ok=True)
