@@ -2,6 +2,8 @@ import os
 from datetime import datetime
 
 TIMESTAMP: str = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
+APP_HOST = "0.0.0.0"
+APP_PORT = 8080
 
 # Data Ingestion constants
 ARTIFACTS_DIR = os.path.join("artifacts", TIMESTAMP)

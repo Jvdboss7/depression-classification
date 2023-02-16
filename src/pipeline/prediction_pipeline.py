@@ -3,7 +3,7 @@ import io
 import sys
 import keras
 import pickle
-from PIL import Image
+import neattext.functions as nfx
 from src.logger import logging
 from src.constants import *
 from src.exception import CustomException
@@ -14,10 +14,10 @@ from src.entity.config_entity import DataTransformationConfig,ModelEvaluationCon
 class PredictionPipeline:
     def __init__(self):
         self.bucket_name = BUCKET_NAME
+        self.data_transformation_config = DataTransformationConfig()
         self.model_evaluation_config = ModelEvaluationConfig()
         self.model_path = os.path.join("artifacts", "PredictModel")
         self.s3 = S3Sync()
-
 
     def get_model_from_s3(self) -> str:
         """
@@ -48,6 +48,29 @@ class PredictionPipeline:
 
         except Exception as e:
             raise CustomException(e, sys) from e
+        
+    def text_cleaning(self,text):
+        """
+        This function takes in a list of sentences and returns a list of cleaned sentences and a list of the
+        length of each sentence
+        
+        :param text: The text to be cleaned
+        :return: clean_text and text_len
+        """
+        try:
+            logging.info("Entered into the text_cleaning function")
+            text_len = []
+            clean_text = []
+            for sentance in text:
+                sentance = sentance.lower()
+                sentance = nfx.remove_special_characters(sentance)
+                sentance = nfx.remove_stopwords(sentance)
+                text_len.append(len(sentance.split()))
+                clean_text.append(sentance)
+            logging.info("Exited the text_cleaning function")
+            return clean_text,text_len
+        except Exception as e:
+            raise CustomException(e,sys) from e
 
     def predict(self,best_model_path,text):
         """load image, returns cuda tensor"""
@@ -55,30 +78,27 @@ class PredictionPipeline:
         try:
             best_model_path:str = self.get_model_from_s3()
             load_model=keras.models.load_model(best_model_path)
-            # with open('tokenizer.pickle', 'rb') as handle:
-            #     load_tokenizer = pickle.load(handle)
+            with open('tokenizer.pickle', 'rb') as handle:
+                load_tokenizer = pickle.load(handle)
             
-            text=self.data_transformation.concat_data_cleaning(text)
+            text,text_len = self.text_cleaning(text)
+            # text=self.data_transformation.concat_data_cleaning(text)
             text = [text]            
             print(text)
             seq = load_tokenizer.texts_to_sequences(text)
-            padded = pad_sequences(seq, maxlen=300)
+            padded = pad_sequences(seq, maxlen=50)
             print(seq)
             pred = load_model.predict(padded)
             pred
             print("pred", pred)
-            if pred>0.3:
-                
-
-                print("hate and abusive")
-                return "hate and abusive"
+            if pred>0.4:
+                print("depressive ")
+                return "depressive"
             else:
-                print("no hate")
-                return "no hate"
+                print("not depressive")
+                return "not depressive"
         except Exception as e:
             raise CustomException(e, sys) from e
-
-
 
     def run_pipeline(self,text):
         logging.info("Entered the run_pipeline method of PredictionPipeline class")
