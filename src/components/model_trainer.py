@@ -1,5 +1,6 @@
 import os
 import sys
+import pickle
 import pandas as pd
 import numpy as np
 from src.constants import *
@@ -45,8 +46,9 @@ class ModelTrainer:
         try:
             logging.info("Entered into the embedding_matrix function")
             self.s3.sync_folder_from_s3(folder = self.model_trainer_config.MODEL_TRAINER_ARTIFACTS_DIR,bucket_name = BUCKET_NAME,bucket_folder_name = self.model_trainer_config.EMBEDDINGS)
-            glove_embedding = self.model_trainer_config.EMBEDDINGS_PATH
-            tokenizer = Tokenizer()
+            with open(self.model_trainer_config.EMBEDDINGS_PATH, 'rb') as fp:
+                glove_embedding = pickle.load(fp)
+            tokenizer = self.data_transformation_artifacts.tokenizer
             v=len(tokenizer.word_index)
             embedding_matrix=np.zeros((v+1,300), dtype=float)
             for word,idx in tokenizer.word_index.items():
@@ -67,7 +69,7 @@ class ModelTrainer:
         try:
             logging.info("Creating the custom model")
             
-            tokenizer = Tokenizer()
+            tokenizer = self.data_transformation_artifacts.tokenizer
             v=len(tokenizer.word_index)
             model=Sequential()
             model.add(Input(shape=(50,)))

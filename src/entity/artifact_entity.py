@@ -12,6 +12,7 @@ class DataTransformationArtifacts:
     test_text_pad_path: str
     train_output_path: str
     test_output_path: str
+    tokenizer: object
 
 # Model Trainer artifacts
 @dataclass
