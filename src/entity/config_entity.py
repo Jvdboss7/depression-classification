@@ -34,8 +34,8 @@ class ModelTrainerConfig:
         self.MODEL_TRAINER_ARTIFACTS_DIR: str = os.path.join(os.getcwd(), ARTIFACTS_DIR, MODEL_TRAINER_ARTIFACTS_DIR)
         self.TRAINED_MODEL_PATH = os.path.join(self.MODEL_TRAINER_ARTIFACTS_DIR,TRAINED_MODEL_DIR)
         self.EMBEDDINGS = EMBEDDINGS
-        self.EMBEDDINGS_PATH: str = os.path.join(os.getcwd(),MODEL_TRAINER_ARTIFACTS_DIR,EMBEDDINGS)
-
+        self.EMBEDDINGS_PATH: str = os.path.join(self.MODEL_TRAINER_ARTIFACTS_DIR,self.EMBEDDINGS)
+        self.GLOVE_EMBEDDING_PATH = os.path.join(self.EMBEDDINGS_PATH,"glove.840B.300d.pkl")
 @dataclass
 class ModelEvaluationConfig: 
     def __init__(self):

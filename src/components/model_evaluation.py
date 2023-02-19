@@ -91,20 +91,20 @@ class ModelEvaluation:
             test_text_pad = np.load(self.data_transformation_artifacts.test_text_pad_path)
             test_output = np.load(self.data_transformation_artifacts.test_output_path)
 
-            trained_model_accuracy = trained_model.evaluate(test_text_pad)
+            trained_model_accuracy = trained_model.evaluate(test_text_pad,test_output)
 
             logging.info("Fetch best model from gcloud storage")
             best_model_path = self.get_model_from_s3()
 
             logging.info("Check is best model present in the gcloud storage or not ?")
-            if os.path.isdir(best_model_path) is False:
+            if os.path.isfile(best_model_path) is False:
                 is_model_accepted = True
                 logging.info("glcoud storage model is false and currently trained model accepted is true")
 
             else:
                 logging.info("Load best model fetched from gcloud storage")
                 best_model=keras.models.load_model(best_model_path)
-                best_model_accuracy= best_model.evaluate(test_text_pad)
+                best_model_accuracy= best_model.evaluate(test_text_pad,test_output)
                 logging.info("Comparing loss between best_model_loss and trained_model_loss ? ")
                 if best_model_accuracy > trained_model_accuracy:
                     is_model_accepted = True

@@ -45,8 +45,12 @@ class ModelTrainer:
         """
         try:
             logging.info("Entered into the embedding_matrix function")
-            self.s3.sync_folder_from_s3(folder = self.model_trainer_config.MODEL_TRAINER_ARTIFACTS_DIR,bucket_name = BUCKET_NAME,bucket_folder_name = self.model_trainer_config.EMBEDDINGS)
-            with open(self.model_trainer_config.EMBEDDINGS_PATH, 'rb') as fp:
+            # /home/jvdboss/workspace/ML_DL/Depression-Detection/depression-classification/artifacts/02_19_2023_19_39_52/ModelTrainerArtifacts/embedding/glove.840B.300d.pkl
+            # /home/jvdboss/workspace/ML_DL/Depression-Detection/depression-classification/artifacts/02_19_2023_19_39_52/ModelTrainerArtifacts/embedding/glove.840B.300d.pkl
+            # /home/jvdboss/workspace/ML_DL/Depression-Detection/depression-classification/artifacts/02_19_2023_19_39_52/ModelTrainerArtifacts/embedding
+            print(self.model_trainer_config.EMBEDDINGS_PATH)
+            self.s3.sync_folder_from_s3(folder = self.model_trainer_config.EMBEDDINGS_PATH,bucket_name = BUCKET_NAME,bucket_folder_name = self.model_trainer_config.EMBEDDINGS)
+            with open(self.model_trainer_config.GLOVE_EMBEDDING_PATH, 'rb') as fp:
                 glove_embedding = pickle.load(fp)
             tokenizer = self.data_transformation_artifacts.tokenizer
             v=len(tokenizer.word_index)
@@ -114,7 +118,7 @@ class ModelTrainer:
             # epochs=30,batch_size=256,callbacks=[early_stop,reducelr])
 
             history=model.fit(train_text_pad,train_output,validation_data=(test_text_pad,test_output),
-            epochs=20,batch_size=32)
+            epochs=1,batch_size=32)
             model.save(self.model_trainer_config.TRAINED_MODEL_PATH)
 
             logging.info(f"Saved the trained model")
