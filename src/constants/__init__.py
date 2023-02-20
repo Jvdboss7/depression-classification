@@ -27,6 +27,7 @@ TEST_OUTPUT = 'test_output.npy'
 MODEL_TRAINER_ARTIFACTS_DIR = 'ModelTrainerArtifacts'
 EMBEDDINGS = "embedding"
 TRAINED_MODEL_DIR = "trained_model"
+PKL = "glove.840B.300d.pkl"
 
 # Model  Evaluation constants
 MODEL_EVALUATION_ARTIFACTS_DIR = 'ModelEvaluationArtifacts'

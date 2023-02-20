@@ -98,17 +98,11 @@ class DataTransformation:
             train_output=label_target.fit_transform(train_dataset['class'])
             test_output=label_target.transform(test_dataset['class'])
 
-            # with open('tokenizer.pickle', 'wb') as handle:
-            #     pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
-            # save_object(self.data_transformation_config.TRAIN_TRANSFORM_OBJECT_FILE_PATH, train_data)
-            # save_object(self.data_transformation_config.TEST_TRANSFORM_OBJECT_FILE_PATH, test_data)
             os.makedirs(self.data_transformation_config.DATA_TRANSFORMATION_ARTIFACTS_DIR,exist_ok=True)
             np.save(self.data_transformation_config.TRAIN_TEXT_PAD,train_text_pad)
             np.save(self.data_transformation_config.TEST_TEXT_PAD,test_text_pad)
             np.save(self.data_transformation_config.TRAIN_OUTPUT,train_output)
             np.save(self.data_transformation_config.TEST_OUTPUT,test_output)
-
-            # train_text_pad, train_output,test_text_pad,test_output
 
             data_transformation_artifact = DataTransformationArtifacts(
                 train_text_pad_path=self.data_transformation_config.TRAIN_TEXT_PAD,

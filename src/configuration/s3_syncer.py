@@ -22,6 +22,15 @@ class S3Sync:
         os.system(command)
 
     def sync_folder_from_s3(self,folder,bucket_name,bucket_folder_name):
+        """
+        > This function syncs a folder from an S3 bucket to a local folder
+        
+        :param folder: The folder you want to sync to
+        :param bucket_name: The name of the bucket you want to sync from
+        :param bucket_folder_name: The name of the folder in the S3 bucket that you want to sync to your
+        local folder
+        :return: The folder that was synced from S3.
+        """
         command = f"aws s3 sync s3://{bucket_name}/{bucket_folder_name} {folder}"
 
         logging.info(f"Command is : {command}")
