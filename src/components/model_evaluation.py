@@ -97,7 +97,7 @@ class ModelEvaluation:
             best_model_path = self.get_model_from_s3()
 
             logging.info("Check is best model present in the gcloud storage or not ?")
-            if os.path.isfile(best_model_path) is False:
+            if os.path.isdir(best_model_path) is False:
                 is_model_accepted = True
                 logging.info("glcoud storage model is false and currently trained model accepted is true")
 
