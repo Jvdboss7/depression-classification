@@ -24,28 +24,28 @@ jobs:
           repo-scan-on-push: true
           tag: latest
 
-  continuous-delivery:
-    machine: true
-    resource_class: deep-learning-01/dl-ineuron
-    steps:
-      - aws-cli/setup
+  # continuous-delivery:
+  #   machine: true
+  #   resource_class: deep-learning-01/dl-ineuron
+  #   steps:
+  #     - aws-cli/setup
 
-      - run:
-          name: auth to aws ecr
-          command: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 566373416292.dkr.ecr.ap-south-1.amazonaws.com
+  #     - run:
+  #         name: auth to aws ecr
+  #         command: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 566373416292.dkr.ecr.ap-south-1.amazonaws.com
 
-      - run:
-          name: pull image from private repository
-          command: docker pull 566373416292.dkr.ecr.ap-south-1.amazonaws.com/human-action-recognition:latest
+  #     - run:
+  #         name: pull image from private repository
+  #         command: docker pull 566373416292.dkr.ecr.ap-south-1.amazonaws.com/human-action-recognition:latest
     
-      - run:
-          name: run image
-          command: docker run -d -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -e AWS_DEFAULT_REGION=${AWS_REGION} -p 8080:8080 566373416292.dkr.ecr.ap-south-1.amazonaws.com/human-action-recognition:latest
+  #     - run:
+  #         name: run image
+  #         command: docker run -d -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -e AWS_DEFAULT_REGION=${AWS_REGION} -p 8080:8080 566373416292.dkr.ecr.ap-south-1.amazonaws.com/human-action-recognition:latest
 workflows:
   CICD:
     jobs:
       - continuous-integration
-      - continuous-delivery:
-          requires:
-          - continuous-integration
+      # - continuous-delivery:
+      #     requires:
+      #     - continuous-integration
       
