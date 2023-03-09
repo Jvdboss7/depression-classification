@@ -20,7 +20,7 @@ jobs:
           push-image: true
           region: '${AWS_REGION}'
           repo: depression-classification
-          registry-id: 566373416292
+          registry-id: "566373416292"
           repo-scan-on-push: true
           tag: latest
 
