@@ -12,23 +12,11 @@ jobs:
           version: 20.10.14
           docker_layer_caching: true
 
-      - aws-ecr/build-and-push-image:
-          docker-login: false 
-          repo: depression-classification 
-          assume-web-identity: false 
-          attach-workspace: false 
-          checkout: true 
-          create-repo: false 
-          public-registry: false 
-          push-image: true 
-          remote-docker-layer-caching: false 
-          repo-scan-on-push: true 
-          set-repo-policy: false 
-          setup-remote-docker: false 
-          skip-when-tags-exist: false 
-      # - run:
-      #     name: auth to aws ecr
-      #     command: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 566373416292.dkr.ecr.ap-south-1.amazonaws.com
+      - aws-cli/setup
+
+      - run:
+          name: auth to aws ecr
+          command: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 566373416292.dkr.ecr.ap-south-1.amazonaws.com
 
   #     - run:
   # continuous-delivery:
