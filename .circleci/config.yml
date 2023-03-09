@@ -12,18 +12,23 @@ jobs:
           version: 20.10.14
           docker_layer_caching: true
 
-      - aws-ecr/build-and-push-image:
-          create-repo: true
-          dockerfile: Dockerfile
-          path: .
-          platform: linux/amd64
-          push-image: true
-          region: '${AWS_REGION}'
-          repo: depression-classification
-          registry-id: AWS_ECR_REGISTRY_ID
-          repo-scan-on-push: true
-          tag: latest
+      # - aws-ecr/build-and-push-image:
+      #     create-repo: true
+      #     dockerfile: Dockerfile
+      #     path: .
+      #     platform: linux/amd64
+      #     push-image: true
+      #     region: '${AWS_REGION}'
+      #     repo: depression-classification
+      #     registry-id: AWS_ECR_REGISTRY_ID
+      #     repo-scan-on-push: true
+      #     tag: latest
 
+      - run:
+          name: auth to aws ecr
+          command: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 566373416292.dkr.ecr.ap-south-1.amazonaws.com
+
+  #     - run:
   # continuous-delivery:
   #   machine: true
   #   resource_class: deep-learning-01/dl-ineuron
